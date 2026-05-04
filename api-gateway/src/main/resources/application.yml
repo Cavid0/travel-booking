@@ -1,17 +1,18 @@
-server: { port: ${PORT:8080} }
+server:
+  port: ${PORT:8080}
 spring:
   application: { name: api-gateway }
   cloud:
     gateway:
       routes:
         - id: flight-service
-          uri: ${FLIGHT_SERVICE_URL:http://localhost:8081}
+          uri: "${FLIGHT_SERVICE_URL:http://localhost:8081}"
           predicates: [Path=/api/flights/**]
         - id: hotel-service
-          uri: ${HOTEL_SERVICE_URL:http://localhost:8082}
+          uri: "${HOTEL_SERVICE_URL:http://localhost:8082}"
           predicates: [Path=/api/hotels/**]
         - id: car-rental-service
-          uri: ${CAR_RENTAL_SERVICE_URL:http://localhost:8083}
+          uri: "${CAR_RENTAL_SERVICE_URL:http://localhost:8083}"
           predicates: [Path=/api/cars/**]
 eureka.client.service-url.defaultZone: ${EUREKA_CLIENT_SERVICEURL_DEFAULTZONE:http://localhost:8761/eureka/}
 management.endpoints.web.exposure.include: health,info,gateway
