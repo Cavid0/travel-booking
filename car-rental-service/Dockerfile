@@ -1,6 +1,10 @@
 FROM maven:3.9-eclipse-temurin-11 AS build
 WORKDIR /workspace
 COPY pom.xml ./
+COPY discovery-service ./discovery-service
+COPY api-gateway ./api-gateway
+COPY flight-service ./flight-service
+COPY hotel-service ./hotel-service
 COPY car-rental-service ./car-rental-service
 RUN mvn -pl car-rental-service -am clean package -DskipTests
 
