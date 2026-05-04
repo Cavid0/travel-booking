@@ -1,0 +1,18 @@
+language: java
+jdk: [openjdk11]
+services: [docker]
+cache: { directories: [$HOME/.m2] }
+install: mvn -B -DskipTests clean package
+script:
+  - mvn -B test
+  - mvn -B verify
+  - docker compose build || docker-compose build
+after_success:
+  - bash <(curl -s https://codecov.io/bash) || echo "Codecov upload skipped"
+before_deploy:
+  - echo "$HEROKU_API_KEY" | docker login --username=_ --password-stdin registry.heroku.com
+  - for service in discovery-service api-gateway flight-service hotel-service car-rental-service; do docker tag travel-booking/$service:latest registry.heroku.com/${HEROKU_APP_NAME}-$service/web; docker push registry.heroku.com/${HEROKU_APP_NAME}-$service/web; done
+deploy:
+  provider: script
+  script: for service in discovery-service api-gateway flight-service hotel-service car-rental-service; do heroku container:release web --app ${HEROKU_APP_NAME}-$service; done
+  on: { branch: main }

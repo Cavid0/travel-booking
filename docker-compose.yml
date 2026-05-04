@@ -1,0 +1,36 @@
+version: '3.8'
+services:
+  discovery-service:
+    build: ./discovery-service
+    image: travel-booking/discovery-service:latest
+    ports: ["8761:8761"]
+    networks: [travel-network]
+  api-gateway:
+    build: ./api-gateway
+    image: travel-booking/api-gateway:latest
+    ports: ["8080:8080"]
+    depends_on: [discovery-service]
+    environment: { EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://discovery-service:8761/eureka/ }
+    networks: [travel-network]
+  flight-service:
+    build: ./flight-service
+    image: travel-booking/flight-service:latest
+    ports: ["8081:8081"]
+    depends_on: [discovery-service]
+    environment: { EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://discovery-service:8761/eureka/ }
+    networks: [travel-network]
+  hotel-service:
+    build: ./hotel-service
+    image: travel-booking/hotel-service:latest
+    ports: ["8082:8082"]
+    depends_on: [discovery-service]
+    environment: { EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://discovery-service:8761/eureka/ }
+    networks: [travel-network]
+  car-rental-service:
+    build: ./car-rental-service
+    image: travel-booking/car-rental-service:latest
+    ports: ["8083:8083"]
+    depends_on: [discovery-service]
+    environment: { EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://discovery-service:8761/eureka/ }
+    networks: [travel-network]
+networks: { travel-network: { driver: bridge } }

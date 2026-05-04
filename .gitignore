@@ -1,0 +1,11 @@
+target/
+*.class
+*.log
+.DS_Store
+.idea/
+.vscode/
+*.iml
+
+# Maven wrapper/cache and local environment
+.mvn/wrapper/maven-wrapper.jar
+.env
