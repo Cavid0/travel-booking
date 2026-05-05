@@ -319,6 +319,8 @@ git commit -m "Add Render deployment blueprint"
 git push
 ```
 
+> Vacib: `travel-booking-discovery` servisində `EUREKA_CLIENT_ENABLED=false` yazma. Eureka Server-in öz auto-configuration bean-ləri üçün client tərəfi tam söndürülməməlidir. Discovery service-də yalnız `register-with-eureka: false` və `fetch-registry: false` qalmalıdır.
+
 ### 10.2 Render Blueprint yarat
 
 1. https://dashboard.render.com aç.
@@ -361,3 +363,19 @@ curl "https://travel-booking-gateway.onrender.com/api/cars/search?location=LosAn
 | `CAR_RENTAL_SERVICE_URL` | Car rental servisinin real Render URL-i |
 
 Sonra API Gateway servisini **Manual Deploy > Clear build cache & deploy** ilə yenidən deploy et.
+
+### 10.5 Discovery service Render xətası
+
+Əgər `travel-booking-discovery` log-da bu xəta çıxarsa:
+
+```text
+No qualifying bean of type 'com.netflix.appinfo.ApplicationInfoManager'
+```
+
+Render dashboard-da `travel-booking-discovery` servisinin **Environment** bölməsinə gir və bunu sil:
+
+```text
+EUREKA_CLIENT_ENABLED=false
+```
+
+Sonra **Manual Deploy > Clear build cache & deploy** et.

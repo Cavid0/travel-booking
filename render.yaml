@@ -5,9 +5,6 @@ services:
     plan: free
     dockerfilePath: ./discovery-service/Dockerfile
     healthCheckPath: /actuator/health
-    envVars:
-      - key: EUREKA_CLIENT_ENABLED
-        value: false
 
   - type: web
     name: travel-booking-flight
