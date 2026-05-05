@@ -10,27 +10,38 @@ services:
     image: travel-booking/api-gateway:latest
     ports: ["8080:8080"]
     depends_on: [discovery-service]
-    environment: { EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://discovery-service:8761/eureka/ }
+    environment:
+      EUREKA_CLIENT_ENABLED: "true"
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://discovery-service:8761/eureka/
+      FLIGHT_SERVICE_URL: http://flight-service:8081
+      HOTEL_SERVICE_URL: http://hotel-service:8082
+      CAR_RENTAL_SERVICE_URL: http://car-rental-service:8083
     networks: [travel-network]
   flight-service:
     build: ./flight-service
     image: travel-booking/flight-service:latest
     ports: ["8081:8081"]
     depends_on: [discovery-service]
-    environment: { EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://discovery-service:8761/eureka/ }
+    environment:
+      EUREKA_CLIENT_ENABLED: "true"
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://discovery-service:8761/eureka/
     networks: [travel-network]
   hotel-service:
     build: ./hotel-service
     image: travel-booking/hotel-service:latest
     ports: ["8082:8082"]
     depends_on: [discovery-service]
-    environment: { EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://discovery-service:8761/eureka/ }
+    environment:
+      EUREKA_CLIENT_ENABLED: "true"
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://discovery-service:8761/eureka/
     networks: [travel-network]
   car-rental-service:
     build: ./car-rental-service
     image: travel-booking/car-rental-service:latest
     ports: ["8083:8083"]
     depends_on: [discovery-service]
-    environment: { EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://discovery-service:8761/eureka/ }
+    environment:
+      EUREKA_CLIENT_ENABLED: "true"
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://discovery-service:8761/eureka/
     networks: [travel-network]
 networks: { travel-network: { driver: bridge } }
