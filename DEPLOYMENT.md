@@ -85,9 +85,10 @@ curl http://localhost:8083/api/cars
 Gateway üzərindən:
 
 ```bash
-curl http://localhost:8080/flights/api/flights
-curl http://localhost:8080/hotels/api/hotels
-curl http://localhost:8080/cars/api/cars
+curl http://localhost:8080/api/flights
+curl http://localhost:8080/api/hotels
+curl http://localhost:8080/api/cars
+curl "http://localhost:8080/api/flights/search?origin=NYC&destination=LAX"
 ```
 
 Dayandırmaq üçün:
@@ -329,14 +330,22 @@ git push
 
 ### 10.3 Render endpoint-ləri yoxla
 
+Əsas real sayt linki:
+
+```bash
+open https://travel-booking-gateway.onrender.com
+```
+
+Bu linkin içində Flight, Hotel və Car Rental axtarışları işləyir. API-ləri ayrıca yoxlamaq üçün:
+
 ```bash
 curl https://travel-booking-discovery.onrender.com/actuator/health
 curl https://travel-booking-flight.onrender.com/api/flights
 curl https://travel-booking-hotel.onrender.com/api/hotels
 curl https://travel-booking-car-rental.onrender.com/api/cars
-curl https://travel-booking-gateway.onrender.com/api/flights
-curl https://travel-booking-gateway.onrender.com/api/hotels
-curl https://travel-booking-gateway.onrender.com/api/cars
+curl "https://travel-booking-gateway.onrender.com/api/flights/search?origin=NYC&destination=LAX"
+curl "https://travel-booking-gateway.onrender.com/api/hotels/search?location=LosAngeles"
+curl "https://travel-booking-gateway.onrender.com/api/cars/search?location=LosAngeles"
 ```
 
 > Qeyd: Render free plan-da servis yuxuya gedə bilər. İlk request 30-60 saniyə gec cavab verə bilər.

@@ -18,12 +18,23 @@ mvn verify
 ```
 JaCoCo reports: `<service>/target/site/jacoco/index.html`.
 
+## One public website link
+
+After deploying the Render Blueprint, open the API Gateway as the real website:
+
+```text
+https://travel-booking-gateway.onrender.com
+```
+
+This single link contains the UI and calls all backend microservices through the gateway.
+
 ## Endpoints
 - Discovery: http://localhost:8761
-- Flight: http://localhost:8081/api/flights and `/api/flights/search?origin=Baku`
-- Hotel: http://localhost:8082/api/hotels and `/api/hotels/search?city=Baku`
-- Cars: http://localhost:8083/api/cars and `/api/cars/search?city=London`
-- Gateway: `/flights/**`, `/hotels/**`, `/cars/**` via http://localhost:8080
+- Flight: http://localhost:8081/api/flights and `/api/flights/search?origin=NYC&destination=LAX`
+- Hotel: http://localhost:8082/api/hotels and `/api/hotels/search?location=LosAngeles`
+- Cars: http://localhost:8083/api/cars and `/api/cars/search?location=LosAngeles`
+- Gateway website: http://localhost:8080
+- Gateway APIs: `/api/flights/**`, `/api/hotels/**`, `/api/cars/**` via http://localhost:8080
 
 ## CI/CD
 Jenkinsfile stages: checkout, Maven build, tests, JaCoCo coverage, Docker build, smoke test, Heroku deploy. Travis alternative is in `.travis.yml`. Configure `HEROKU_API_KEY`, `HEROKU_APP_NAME`, and optional `CODECOV_TOKEN` in CI.

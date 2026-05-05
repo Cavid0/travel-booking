@@ -8,12 +8,27 @@ spring:
         - id: flight-service
           uri: "${FLIGHT_SERVICE_URL:http://localhost:8081}"
           predicates: [Path=/api/flights/**]
+        - id: flight-service-public
+          uri: "${FLIGHT_SERVICE_URL:http://localhost:8081}"
+          predicates: [Path=/flights/**]
+          filters:
+            - RewritePath=/flights/(?<segment>.*), /api/flights/$\{segment}
         - id: hotel-service
           uri: "${HOTEL_SERVICE_URL:http://localhost:8082}"
           predicates: [Path=/api/hotels/**]
+        - id: hotel-service-public
+          uri: "${HOTEL_SERVICE_URL:http://localhost:8082}"
+          predicates: [Path=/hotels/**]
+          filters:
+            - RewritePath=/hotels/(?<segment>.*), /api/hotels/$\{segment}
         - id: car-rental-service
           uri: "${CAR_RENTAL_SERVICE_URL:http://localhost:8083}"
           predicates: [Path=/api/cars/**]
+        - id: car-rental-service-public
+          uri: "${CAR_RENTAL_SERVICE_URL:http://localhost:8083}"
+          predicates: [Path=/cars/**]
+          filters:
+            - RewritePath=/cars/(?<segment>.*), /api/cars/$\{segment}
 eureka.client.service-url.defaultZone: ${EUREKA_CLIENT_SERVICEURL_DEFAULTZONE:http://localhost:8761/eureka/}
 eureka.client.enabled: ${EUREKA_CLIENT_ENABLED:false}
 management.endpoints.web.exposure.include: health,info,gateway
