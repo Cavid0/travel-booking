@@ -1,9 +1,9 @@
 # Taking Care Of Business - Travel Booking CI/CD
 
-Spring Boot microservice travel booking system with Eureka discovery, API Gateway, Flight, Hotel and Car Rental services. Includes Dockerfiles for every microservice, `docker-compose.yml`, Jenkins and Travis CI pipelines, JUnit tests, JaCoCo coverage, Codecov upload support and Heroku container deployment configuration.
+Spring Boot microservice travel booking system with Eureka discovery, API Gateway, Flight, Hotel and Car Rental services. Includes Dockerfiles for every microservice, `docker-compose.yml`, Jenkins and Travis CI pipelines, JUnit tests, JaCoCo coverage, Codecov upload support, Heroku container deployment configuration and Render Blueprint deployment (`render.yaml`).
 
 ## Structure
-`discovery-service/`, `api-gateway/`, `flight-service/`, `hotel-service/`, `car-rental-service/`, `docker-compose.yml`, `Jenkinsfile`, `.travis.yml`, root `pom.xml`.
+`discovery-service/`, `api-gateway/`, `flight-service/`, `hotel-service/`, `car-rental-service/`, `docker-compose.yml`, `render.yaml`, `Jenkinsfile`, `.travis.yml`, root `pom.xml`.
 
 ## Run locally
 ```bash
@@ -35,3 +35,15 @@ Cloud deploy üçün addım-addım təlimat ayrıca faylda verilib:
 ```text
 DEPLOYMENT.md
 ```
+
+## Render deploy
+
+Render-də **New > Blueprint** seçib GitHub repo-nu qoş. `render.yaml` faylı 5 servisi yaradır:
+
+- `travel-booking-discovery`
+- `travel-booking-gateway`
+- `travel-booking-flight`
+- `travel-booking-hotel`
+- `travel-booking-car-rental`
+
+Gateway URL: `https://travel-booking-gateway.onrender.com`

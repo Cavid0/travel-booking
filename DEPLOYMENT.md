@@ -296,3 +296,59 @@ Local test zamanı görünə bilər. Docker Compose ilə bütün servislər birl
 - [ ] Docker image-lər Heroku registry-ə push olunub
 - [ ] `heroku container:release` işlədilib
 - [ ] Public endpoint-lər `curl` ilə yoxlanılıb
+
+## 10. Render ilə deploy addımları
+
+Render üçün `render.yaml` Blueprint faylı əlavə edilib. Bu fayl 5 servisi Docker ilə deploy edir:
+
+- `travel-booking-discovery`
+- `travel-booking-flight`
+- `travel-booking-hotel`
+- `travel-booking-car-rental`
+- `travel-booking-gateway`
+
+### 10.1 GitHub-a push et
+
+Render Blueprint repo-dan oxunur. Əvvəl dəyişiklikləri GitHub-a push et:
+
+```bash
+cd travel-booking
+git add .
+git commit -m "Add Render deployment blueprint"
+git push
+```
+
+### 10.2 Render Blueprint yarat
+
+1. https://dashboard.render.com aç.
+2. **New +** düyməsinə kliklə.
+3. **Blueprint** seç.
+4. GitHub repository-ni qoş.
+5. Render `render.yaml` faylını avtomatik tapacaq.
+6. **Apply** et və deploy prosesinin bitməsini gözlə.
+
+### 10.3 Render endpoint-ləri yoxla
+
+```bash
+curl https://travel-booking-discovery.onrender.com/actuator/health
+curl https://travel-booking-flight.onrender.com/api/flights
+curl https://travel-booking-hotel.onrender.com/api/hotels
+curl https://travel-booking-car-rental.onrender.com/api/cars
+curl https://travel-booking-gateway.onrender.com/api/flights
+curl https://travel-booking-gateway.onrender.com/api/hotels
+curl https://travel-booking-gateway.onrender.com/api/cars
+```
+
+> Qeyd: Render free plan-da servis yuxuya gedə bilər. İlk request 30-60 saniyə gec cavab verə bilər.
+
+### 10.4 Əgər service URL adları fərqli yaranarsa
+
+Əgər Render URL-ləri yuxarıdakı formatda yaratmasa, Render dashboard-da `travel-booking-gateway` servisinin environment variable-larını düzəlt:
+
+| Key | Dəyər |
+|---|---|
+| `FLIGHT_SERVICE_URL` | Flight servisinin real Render URL-i |
+| `HOTEL_SERVICE_URL` | Hotel servisinin real Render URL-i |
+| `CAR_RENTAL_SERVICE_URL` | Car rental servisinin real Render URL-i |
+
+Sonra API Gateway servisini **Manual Deploy > Clear build cache & deploy** ilə yenidən deploy et.

@@ -1,0 +1,56 @@
+services:
+  - type: web
+    name: travel-booking-discovery
+    env: docker
+    plan: free
+    dockerfilePath: ./discovery-service/Dockerfile
+    healthCheckPath: /actuator/health
+    envVars:
+      - key: EUREKA_CLIENT_ENABLED
+        value: false
+
+  - type: web
+    name: travel-booking-flight
+    env: docker
+    plan: free
+    dockerfilePath: ./flight-service/Dockerfile
+    healthCheckPath: /actuator/health
+    envVars:
+      - key: EUREKA_CLIENT_ENABLED
+        value: false
+
+  - type: web
+    name: travel-booking-hotel
+    env: docker
+    plan: free
+    dockerfilePath: ./hotel-service/Dockerfile
+    healthCheckPath: /actuator/health
+    envVars:
+      - key: EUREKA_CLIENT_ENABLED
+        value: false
+
+  - type: web
+    name: travel-booking-car-rental
+    env: docker
+    plan: free
+    dockerfilePath: ./car-rental-service/Dockerfile
+    healthCheckPath: /actuator/health
+    envVars:
+      - key: EUREKA_CLIENT_ENABLED
+        value: false
+
+  - type: web
+    name: travel-booking-gateway
+    env: docker
+    plan: free
+    dockerfilePath: ./api-gateway/Dockerfile
+    healthCheckPath: /actuator/health
+    envVars:
+      - key: EUREKA_CLIENT_ENABLED
+        value: false
+      - key: FLIGHT_SERVICE_URL
+        value: https://travel-booking-flight.onrender.com
+      - key: HOTEL_SERVICE_URL
+        value: https://travel-booking-hotel.onrender.com
+      - key: CAR_RENTAL_SERVICE_URL
+        value: https://travel-booking-car-rental.onrender.com
